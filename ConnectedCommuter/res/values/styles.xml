@@ -1,0 +1,48 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="HelveticaNeue" >
+        <item name="custom_font">HelveticaNeue</item>
+    </style>
+    
+    <style name="HelveticaNeueLight" >
+        <item name="custom_font">HelveticaNeueLight</item>
+    </style>
+    
+    <style name="HelveticaNeueLightItalic" >
+        <item name="custom_font">HelveticaNeueLightItalic</item>
+    </style>
+    
+    <style name="HelveticaNeueBold" >
+        <item name="custom_font">HelveticaNeueBold</item>
+    </style>
+    
+    <style name="HelveticaNeueBoldItalic" >
+        <item name="custom_font">HelveticaNeueBoldItalic</item>
+    </style>
+    
+    <style name="HelveticaNeueMedium" >
+        <item name="custom_font">HelveticaNeueMedium</item>
+    </style>
+    
+    <style name="HelveticaNeueUltraLight" >
+        <item name="custom_font">HelveticaNeueUltraLight</item>
+    </style>
+
+</resources>
