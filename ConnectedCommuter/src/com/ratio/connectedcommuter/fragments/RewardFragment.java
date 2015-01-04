@@ -1,5 +1,6 @@
 package com.ratio.connectedcommuter.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,18 @@ import android.view.ViewGroup;
 import com.ratio.common.fragments.BaseRatioFragment;
 import com.ratio.common.views.FontableTextView;
 import com.ratio.connectedcommuter.R;
+import com.ratio.connectedcommuter.activities.MainActivity;
 
 public class RewardFragment extends BaseRatioFragment {
 
 	public RewardFragment() {
+	}
+	
+	private MainActivity mActivity;
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		mActivity = (MainActivity) activity;
 	}
 	
 	@Override
@@ -33,5 +42,4 @@ public class RewardFragment extends BaseRatioFragment {
 		
 		return rootView;
 	}
-
 }

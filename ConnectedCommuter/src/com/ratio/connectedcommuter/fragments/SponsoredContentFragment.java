@@ -1,5 +1,6 @@
 package com.ratio.connectedcommuter.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,13 @@ public class SponsoredContentFragment extends BaseRatioFragment {
 	MainActivity rootActivity;
 	
 	public SponsoredContentFragment() {
+	}
+	
+	private MainActivity mActivity;
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		mActivity = (MainActivity) activity;
 	}
 	
 	@Override

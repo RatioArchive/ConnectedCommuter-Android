@@ -1,13 +1,21 @@
 package com.ratio.connectedcommuter.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentTransaction;
+
+import java.util.List;
+
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.couchbase.lite.Document;
@@ -46,6 +54,8 @@ public class MainActivity extends Activity implements ActivityInterface {
 	private MapFragment mMapFragment;
 	private RewardFragment mRewardFragment;
 	private SponsoredContentFragment mSponsoredContentFragment;
+	private View mQRModal;
+	private View mPointsModal;
 	
 	private AppMode mAppMode;
 	
@@ -58,7 +68,6 @@ public class MainActivity extends Activity implements ActivityInterface {
 		SPONSORED_CONTENT,
 		REWARD
 	}
-	private static String DB_NAME = "connected_car";
 
 	private Context mContext;
 
@@ -77,40 +86,76 @@ public class MainActivity extends Activity implements ActivityInterface {
 		mRewardFragment = new RewardFragment();
 		mSponsoredContentFragment = new SponsoredContentFragment();
 		
+		mQRModal = findViewById(R.id.qr_code_modal);
+		mPointsModal = findViewById(R.id.points_modal);
+		
 		// Setup ActionBar
 		initActionBar();
 		mContext = this;
+		
+		switchAppMode(AppMode.AUTO);
+		
 		// Init footmarks SDK - a 4.2+ device is required for this!
 		initFootmarks();
+		
+		// Setup db
 		testDB();
 	}
 	
+	private void showQRModal(){
+		mQRModal.setVisibility(View.VISIBLE);
+	}
+	
+	private void hideQRModal(){
+		mQRModal.setVisibility(View.GONE);
+	}
+	
+	private void showPointsModal(){
+		mPointsModal.setVisibility(View.VISIBLE);
+	}
+	
+	private void hidePointsModal(){
+		mPointsModal.setVisibility(View.GONE);
+	}
+	
 	private Integer getTotalPoints() {
-		
-		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
-		return (Integer) person.getProperty(Constants.TOTAL_PTS);
+		return 694;
+//		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
+//		return (Integer) person.getProperty(Constants.TOTAL_PTS);
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private List<Integer> getRiders() {
 		
-		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
-		return (List<Integer>) pool.getProperty(Constants.RIDERS);
+		List<Integer> riders = new ArrayList<Integer>();
+		riders.add(R.drawable.avatars_14);
+		riders.add(R.drawable.avatars_15);
+		riders.add(R.drawable.avatars_16);
+		return riders;
+//		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
+//		return (List<Integer>) pool.getProperty(Constants.RIDERS);
 		
 	}
 	
-	@SuppressLint("ShowToast")
 	private void testDB() {
 		
-		String pts = getTotalPoints().toString();
-		Toast.makeText(mContext, pts, Toast.LENGTH_SHORT).show();
+//		String pts = getTotalPoints().toString();
+//		Toast.makeText(mContext, pts, Toast.LENGTH_SHORT).show();
+//		
+//		List<Integer> riders = getRiders();
+//		String size = Integer.toString(riders.size());
+//		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
 		
-		List<Integer> riders = getRiders();
-		String size = Integer.toString(riders.size());
-		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
 	}
 	
-	private void switchAppMode(AppMode appMode) {
+	public void switchAppMode(AppMode appMode) {
+		
+		// Ignore if already in this mode
+		if (mAppMode == appMode) {
+			return;
+		}
+		
 		mAppMode = appMode;
 		
 		if (mCurrentFragment != null) {
@@ -120,24 +165,58 @@ public class MainActivity extends Activity implements ActivityInterface {
 		switch(appMode) {
 			case AUTO:
 				showFragment(mAutoFragment);
+				showTabs();
 				break;
 			case BIKE:
 				showFragment(mBikeFragment);
+				showTabs();
 				break;
 			case BUS:
 				showFragment(mBusFragment);
+				showTabs();
 				break;
 			case PROGRESS:
 				showFragment(mProgressFragment);
+				hideTabs();
 				break;
 			case MAP:
 				showFragment(mMapFragment);
+				hideTabs();
 				break;
 			case REWARD:
 				showFragment(mRewardFragment);
+				hideTabs();
 				break;
 			case SPONSORED_CONTENT:
 				showFragment(mSponsoredContentFragment);
+				hideTabs();
+				break;
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		switch (mAppMode) {
+			case AUTO:
+				super.onBackPressed();
+				break;
+			case BIKE:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case BUS:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case PROGRESS:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case MAP:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case REWARD:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case SPONSORED_CONTENT:
+				switchAppMode(AppMode.AUTO);
 				break;
 		}
 	}
@@ -145,8 +224,6 @@ public class MainActivity extends Activity implements ActivityInterface {
 	private void initActionBar() {
 		
 		final ActionBar actionBar = getActionBar();
-		
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		// Create a tab listener that is called when the user changes tabs.
 	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
@@ -160,11 +237,11 @@ public class MainActivity extends Activity implements ActivityInterface {
 						break;
 	
 					case 1:
-						switchAppMode(AppMode.SPONSORED_CONTENT);
+						
 						break;
 						
 					case 2:
-						switchAppMode(AppMode.REWARD);
+						
 						break;
 				}
 	        }
@@ -218,6 +295,14 @@ public class MainActivity extends Activity implements ActivityInterface {
         if (fragment.visible()) {
             fragment.onHide(this);
         }
+    }
+    
+    private void showTabs() {
+    	getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    }
+    
+    private void hideTabs() {
+    	getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
     }
 
 	@Override

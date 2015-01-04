@@ -8,5 +8,135 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </FrameLayout>
+    
+    <RelativeLayout
+	    android:id="@+id/qr_code_modal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+	    android:background="@color/overlay_bg_color"
+	    android:layout_gravity="center"
+		android:visibility="invisible">
+	    
+        <RelativeLayout 
+	        android:layout_width="260dp"
+	        android:layout_height="320dp"
+		    android:background="@color/white"
+		    android:layout_centerInParent="true"
+		    android:orientation="vertical"
+		    android:gravity="center_horizontal"
+		    >
+		    
+		    <com.ratio.common.views.FontableTextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/modal_title" 
+		        android:text="Subway - 50%"
+		        android:gravity="center_horizontal"
+		        android:id="@+id/qr_title"
+		        android:layout_marginTop="20dp"
+		        />
+		    
+		    <com.ratio.common.views.FontableTextView
+		        android:id="@+id/qr_desc"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/modal_desc" 
+		        android:text="Present this QR Code to the Cashier to redeem your discount"
+		        android:gravity="center_horizontal"
+		        android:layout_below="@id/qr_title"
+		        android:layout_margin="14dp"
+		        />
+		    
+		    <ImageView
+		        android:id="@+id/qr_img"
+		        android:layout_width="200dp"
+		        android:layout_height="200dp"
+		        android:src="@drawable/qr_code_28"
+		        android:layout_centerInParent="true"
+		        android:layout_below="@id/qr_desc"/>
+		    
+		    <com.ratio.common.views.FontableTextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/modal_bottom_desc" 
+		        android:text="Done"
+		        android:gravity="center_horizontal"
+		        android:layout_alignParentBottom="true"
+		        />
+		    
+	    </RelativeLayout>
+	    
+	</RelativeLayout>
+	
+    <RelativeLayout
+	    android:id="@+id/points_modal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+	    android:background="@color/overlay_bg_color"
+	    android:layout_gravity="center"
+	    android:visibility="invisible">
+	    
+        <RelativeLayout 
+	        android:layout_width="260dp"
+	        android:layout_height="320dp"
+		    android:background="@color/white"
+		    android:layout_centerInParent="true"
+		    android:orientation="vertical"
+		    android:gravity="center_horizontal"
+		    >
+		    
+		    <com.ratio.common.views.FontableTextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/modal_title" 
+		        android:text="Success!"
+		        android:gravity="center_horizontal"
+		        android:id="@+id/points_title"
+		        android:layout_marginTop="20dp"
+		        />
+		    
+		    <com.ratio.common.views.FontableTextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/modal_desc" 
+		        android:text="You completed a challenge and earned extra points"
+		        android:gravity="center_horizontal"
+		        android:layout_margin="20dp"
+		        android:id="@+id/points_desc"
+		        android:layout_below="@id/points_title"
+		        />
+		    
+		    <ImageView
+		        android:layout_width="60dp"
+		        android:layout_height="60dp"
+		        android:src="@drawable/big_check_27"
+		        android:gravity="center"
+		        android:layout_below="@id/points_desc"
+		        android:id="@+id/points_img"
+		        android:layout_centerInParent="true" />
+		        		    
+		    <com.ratio.common.views.FontableTextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/modal_points" 
+		        android:text="100 Points"
+		        android:gravity="center_horizontal"
+		        android:layout_margin="10dp"
+		        android:layout_below="@id/points_img"
+		        android:id="@+id/points_total"
+		        />
 
+		    <com.ratio.common.views.FontableTextView
+		        style="@style/modal_bottom_desc"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="10dp"
+		        android:gravity="center_horizontal|bottom"
+		        android:text="Done"
+		        android:layout_alignParentBottom="true" />
+		    
+	    </RelativeLayout>
+	    
+	</RelativeLayout>
+	
 </FrameLayout>

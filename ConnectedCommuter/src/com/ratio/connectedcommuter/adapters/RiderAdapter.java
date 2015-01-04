@@ -20,7 +20,14 @@ public class RiderAdapter extends BaseAdapter {
 		mRiderDrawables.add(R.drawable.avatars_14);
 		mRiderDrawables.add(R.drawable.avatars_15);
 		mRiderDrawables.add(R.drawable.avatars_16);
+	}
+	
+	public void add() {
 		mRiderDrawables.add(R.drawable.avatars_17);
+	}
+	
+	public void remove() {
+		mRiderDrawables.remove((Integer)R.drawable.avatars_17);
 	}
 
 	@Override
