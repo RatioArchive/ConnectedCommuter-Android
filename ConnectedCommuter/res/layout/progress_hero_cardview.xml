@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp" >
+
+    <ImageView
+        android:id="@+id/image"
+        style="@style/CCCardViewButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/got_hero_30" />
+
+    <RelativeLayout
+        android:id="@+id/text_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image" >
+
+        <com.ratio.common.views.FontableTextView
+            android:id="@+id/title"
+            style="@style/CCCardViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/cc_cardview_bg_color"
+            android:text="@string/active_ride" />
+
+        <com.ratio.common.views.FontableTextView
+            android:id="@+id/subtext1"
+            style="@style/CCCardViewSubtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:background="@color/cc_cardview_bg_color"
+            android:text="@string/three_riders" />
+
+        <com.ratio.common.views.FontableTextView
+            android:id="@+id/subtext2"
+            style="@style/CCCardViewSubtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/subtext1"
+            android:background="@color/cc_cardview_bg_color"
+            android:paddingBottom="10dp"
+            android:text="@string/fifteen_to_arrival" />
+    </RelativeLayout>
+
+</RelativeLayout>

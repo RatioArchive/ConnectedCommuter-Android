@@ -57,6 +57,7 @@ public class AutoFragment extends BaseRatioFragment implements OnClickListener {
 		
 		// Do init stuff
 		cardView.setOnClickListener(this);
+		mMyPointsMeterImage.setOnClickListener(this);
 		mTodaysChallengeBtn.setOnClickListener(this);
 		
 		
@@ -79,6 +80,7 @@ public class AutoFragment extends BaseRatioFragment implements OnClickListener {
 		
 		mNumRidersCardViewTv.setText(mRiderAdapter.getCount() + " riders");
 		mNumRidersMyPointsTv.setText(mRiderAdapter.getCount() + " riders");
+		mMyPointsMultTv.setText("2x");
 	}
 	
 	public void incrementPoints() {
@@ -94,6 +96,9 @@ public class AutoFragment extends BaseRatioFragment implements OnClickListener {
 			} else {
 				onRiderRemoved();
 			}
+			break;
+		case R.id.my_points_meter:
+			mActivity.switchAppMode(AppMode.PROGRESS);
 			break;
 		case R.id.todays_challenge_btn:
 			mActivity.switchAppMode(AppMode.REWARD);

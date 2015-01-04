@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
     
-    <com.ratio.common.views.FontableTextView
-        android:id="@+id/title"
-        style="@style/CCCardViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ProgressFragment" />
+    <ListView 
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="48dp">
+        
+    </ListView>
+    
+    <RelativeLayout 
+        android:id="@+id/bar_layout"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" >
+        
+        <TextView
+            android:id="@+id/points"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="150dp"
+            android:background="@color/app_red"
+            android:textColor="@android:color/white"
+            android:gravity="top|center_horizontal"
+            android:text="694"/>
+        
+    </RelativeLayout>
     
 
-</LinearLayout>
+</RelativeLayout>
