@@ -80,8 +80,13 @@ public class MainActivity extends Activity implements ActivityInterface {
 		// Setup ActionBar
 		initActionBar();
 		mContext = this;
+		
+		switchAppMode(AppMode.AUTO);
+		
 		// Init footmarks SDK - a 4.2+ device is required for this!
 		initFootmarks();
+		
+		// Setup db
 		testDB();
 	}
 	
@@ -110,7 +115,13 @@ public class MainActivity extends Activity implements ActivityInterface {
 		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
 	}
 	
-	private void switchAppMode(AppMode appMode) {
+	public void switchAppMode(AppMode appMode) {
+		
+		// Ignore if already in this mode
+		if (mAppMode == appMode) {
+			return;
+		}
+		
 		mAppMode = appMode;
 		
 		if (mCurrentFragment != null) {
@@ -120,24 +131,58 @@ public class MainActivity extends Activity implements ActivityInterface {
 		switch(appMode) {
 			case AUTO:
 				showFragment(mAutoFragment);
+				showTabs();
 				break;
 			case BIKE:
 				showFragment(mBikeFragment);
+				showTabs();
 				break;
 			case BUS:
 				showFragment(mBusFragment);
+				showTabs();
 				break;
 			case PROGRESS:
 				showFragment(mProgressFragment);
+				hideTabs();
 				break;
 			case MAP:
 				showFragment(mMapFragment);
+				hideTabs();
 				break;
 			case REWARD:
 				showFragment(mRewardFragment);
+				hideTabs();
 				break;
 			case SPONSORED_CONTENT:
 				showFragment(mSponsoredContentFragment);
+				hideTabs();
+				break;
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		switch (mAppMode) {
+			case AUTO:
+				super.onBackPressed();
+				break;
+			case BIKE:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case BUS:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case PROGRESS:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case MAP:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case REWARD:
+				switchAppMode(AppMode.AUTO);
+				break;
+			case SPONSORED_CONTENT:
+				switchAppMode(AppMode.AUTO);
 				break;
 		}
 	}
@@ -145,8 +190,6 @@ public class MainActivity extends Activity implements ActivityInterface {
 	private void initActionBar() {
 		
 		final ActionBar actionBar = getActionBar();
-		
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		// Create a tab listener that is called when the user changes tabs.
 	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
@@ -160,11 +203,11 @@ public class MainActivity extends Activity implements ActivityInterface {
 						break;
 	
 					case 1:
-						switchAppMode(AppMode.SPONSORED_CONTENT);
+						
 						break;
 						
 					case 2:
-						switchAppMode(AppMode.REWARD);
+						
 						break;
 				}
 	        }
@@ -218,6 +261,14 @@ public class MainActivity extends Activity implements ActivityInterface {
         if (fragment.visible()) {
             fragment.onHide(this);
         }
+    }
+    
+    private void showTabs() {
+    	getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    }
+    
+    private void hideTabs() {
+    	getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
     }
 
 	@Override
