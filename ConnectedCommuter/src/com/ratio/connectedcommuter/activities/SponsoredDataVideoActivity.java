@@ -11,7 +11,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -202,7 +201,6 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
         public void onReceive(Context context, Intent intent) {
         	if(isConnectedWifi(context) && connectionType != 1) {
         		ImageView sponsoredIV = (ImageView) findViewById(R.id.ivSponsored);
-                VideoView videoView = (VideoView)findViewById(R.id.testVideo);
                 sponsoredIV.setVisibility(View.GONE);
                 String videoUrl = "";
                 if(demo) {
@@ -211,12 +209,11 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
                 	videoUrl = url;
                 }
                 Uri uri = Uri.parse(videoUrl);
-                videoView.setVideoURI(uri);
-                videoView.start();
+                sponsoredVideo.setVideoURI(uri);
+                sponsoredVideo.start();
         	} else if(isConnectedMobile(context)) {
         		ImageView sponsoredIV = (ImageView) findViewById(R.id.ivSponsored);
-                VideoView videoView = (VideoView)findViewById(R.id.testVideo);
-                
+                sponsoredVideo = (VideoView)findViewById(R.id.testVideo);
                 SmiResult sr = SmiSdk.getSDAuth(rootActivity, url, userId, appId);
                 int state  = sr.getState();
                 if(state == SmiResult.SD_AVAILABLE) {
@@ -228,8 +225,8 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
                 	}
                 	sponsoredIV.setVisibility(View.VISIBLE);
                 	Uri uri = Uri.parse(sdUrl);
-                    videoView.setVideoURI(uri);
-                    videoView.start();
+                    sponsoredVideo.setVideoURI(uri);
+                    sponsoredVideo.start();
                 }
         	} else {
         		//No internet - Do something at some point
