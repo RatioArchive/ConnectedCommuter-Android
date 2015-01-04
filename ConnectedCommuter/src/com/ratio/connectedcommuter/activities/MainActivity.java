@@ -80,6 +80,9 @@ public class MainActivity extends Activity implements ActivityInterface {
 		
 		setContentView(R.layout.activity_main);
 		
+		ActionBar ab = getActionBar();
+		ab.setIcon(getResources().getDrawable(R.drawable.hamburger_icon_31));
+		
 		// Init fragments
 		mAutoFragment = new AutoFragment();
 		mBikeFragment = new BikeFragment();

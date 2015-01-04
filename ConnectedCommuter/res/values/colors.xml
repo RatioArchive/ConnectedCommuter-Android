@@ -4,4 +4,5 @@
     <color name="app_red">#f15f43</color>
     <color name="overlay_bg_color">#4D000000</color>
     <color name="white">#ffffff</color>
+    <color name="actionbar_background">#344145</color>
 </resources>
