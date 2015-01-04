@@ -54,7 +54,7 @@
                 android:value="true" />
         </service>
 
-        <receiver android:name="com.ratio.connectedcommuter.receivers.CCFootmarksSdkBroadcastReceiver" >
+        <receiver android:name="com.ratio.connectedcommuter.activities.MainActivity$CCFootmarksSdkBroadcastReceiver" >
             <intent-filter>
                 <action android:name="com.footmarkssdk.did_complete_experiences" />
                 <action android:name="com.footmarkssdk.on_beacon_discovered" />
