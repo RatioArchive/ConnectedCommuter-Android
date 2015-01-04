@@ -49,6 +49,20 @@ public class ProgressAdapter extends BaseAdapter {
 	public void enableItem(int position) {
 		getItem(position).enabled = true;
 	}
+	
+	public void onRewardUnlocked() {
+		enableItem(0);
+		mItems.get(0).subtext1 = "Royal Prize";
+		mItems.get(0).subtext2 = "Stream now!";
+		
+		mItems.get(1).subtext2 = "Completed";
+		mItems.get(1).enabled = true;
+		
+		mItems.get(2).subtext2 = "Did not complete";
+		
+		mItems.get(3).subtext2 = "Completed";
+		
+	}
 
 	@Override
 	public int getCount() {

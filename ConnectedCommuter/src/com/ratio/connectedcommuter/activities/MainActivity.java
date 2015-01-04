@@ -126,6 +126,7 @@ public class MainActivity extends Activity implements ActivityInterface {
 			@Override
 			public void onClick(View view) {
 				hidePointsModal();
+				onRewardsUnlocked();
 			}
 
 		});
@@ -178,8 +179,11 @@ public class MainActivity extends Activity implements ActivityInterface {
 		
 	}
 	
-	public void onRewardsUnlocked(){
-		
+	public void onRewardsUnlocked() {
+		Toast.makeText(mContext, "onRewardsUnlocked", Toast.LENGTH_SHORT).show();
+		mAutoFragment.incrementPoints();
+		switchAppMode(AppMode.PROGRESS);
+		mProgressFragment.onRewardsUnlocked();
 	}
 	
 	public void switchAppMode(AppMode appMode) {

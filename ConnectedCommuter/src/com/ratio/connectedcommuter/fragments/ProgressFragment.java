@@ -39,6 +39,9 @@ public class ProgressFragment extends BaseRatioFragment {
 		final View rootView = inflater.inflate(R.layout.fragment_progress, container, false);
 		mListView = (ListView) rootView.findViewById(R.id.listview);
 		mAdapter = new ProgressAdapter();
+		if (mIsEnabled) {
+			mAdapter.onRewardUnlocked();
+		}
 		
 		// Do init stuff
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -49,7 +52,6 @@ public class ProgressFragment extends BaseRatioFragment {
 				
 				if (position == 0) {
 					ProgressItem item = mAdapter.getItem(position);
-					mAdapter.enableItem(0); // TODO: DON'T DO THIS
 					if (item.isEnabled()) {
 						mActivity.switchAppMode(AppMode.SPONSORED_CONTENT);
 					}
@@ -61,6 +63,14 @@ public class ProgressFragment extends BaseRatioFragment {
 		return rootView;
 	}
 	
-	
+	private boolean mIsEnabled;
+	public void onRewardsUnlocked() {
+		mIsEnabled = true;
+		// Enable the hero
+		if (mAdapter != null) {
+			mAdapter.onRewardUnlocked();
+			mAdapter.notifyDataSetChanged();
+		}
+	}
 
 }
