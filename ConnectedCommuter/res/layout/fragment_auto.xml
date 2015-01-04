@@ -1,11 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:layout_margin="3dp"
     android:orientation="vertical" >
-    
-    <include 
-        android:id="@+id/cc_cardview"
-        layout="@layout/cc_cardview" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/cardview_layout"
+        style="@style/CCCardViewBg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/cc_cardview"
+            layout="@layout/auto_cc_cardview" />
+
+        <com.meetme.android.horizontallistview.HorizontalListView
+            android:id="@+id/rider_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rider_item_height"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/my_points_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardview_layout"
+        android:layout_margin="5dp"
+        android:orientation="vertical" >
+
+        <com.ratio.common.views.FontableTextView
+            android:id="@+id/my_points"
+            style="@style/MyPointsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_points" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/my_points_meter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/dial_19" />
+            
+            <View 
+                android:layout_width="2dp"
+                android:layout_height="150dp"
+                android:background="@color/cc_cardview_bg_color"
+                android:layout_weight="0"/>
+
+            <RelativeLayout
+                android:id="@+id/my_points_multiplier_layout"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1" >
+
+                <com.ratio.common.views.FontableTextView
+                    android:id="@+id/my_points_multiplier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="2x"
+                    android:textSize="48sp" />
+
+                <com.ratio.common.views.FontableTextView
+                    android:id="@+id/num_riders_multiplier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/my_points_multiplier"
+                    android:layout_centerHorizontal="true"
+                    android:text="3 riders"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/todays_challenge_btn"
+        style="@style/CCCardViewBg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <com.ratio.common.views.FontableTextView
+            style="@style/MyPointsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/todays_challenge" />
+        
+        <com.ratio.common.views.FontableTextView
+            style="@style/MyPointsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/point_bonus" />
+    </LinearLayout>
+
+</RelativeLayout>

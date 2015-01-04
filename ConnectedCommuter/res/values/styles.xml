@@ -33,6 +33,10 @@
         <item name="android:src">@drawable/ic_launcher</item>
     </style>
     
+    <style name="MyPointsText" parent="@style/RobotoBold" >
+        <item name="android:textSize">24sp</item>
+    </style>
+    
     <style name="HelveticaNeue" >
         <item name="custom_font">HelveticaNeue</item>
     </style>

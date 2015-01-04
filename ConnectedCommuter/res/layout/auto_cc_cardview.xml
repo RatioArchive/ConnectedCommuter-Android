@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp" >
-    
+
     <com.ratio.common.views.FontableTextView
         android:id="@+id/title"
         style="@style/CCCardViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/active_ride" />
-    
+
     <com.ratio.common.views.FontableTextView
         android:id="@+id/subtext1"
         style="@style/CCCardViewSubtext"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:text="@string/three_riders" />
-    
+
     <com.ratio.common.views.FontableTextView
         android:id="@+id/subtext2"
         style="@style/CCCardViewSubtext"
@@ -27,14 +27,14 @@
         android:layout_below="@+id/subtext1"
         android:paddingBottom="10dp"
         android:text="@string/fifteen_to_arrival" />
-    
-    <ImageView 
+
+    <ImageView
         android:id="@+id/btn"
         style="@style/CCCardViewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/subtext2"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/subtext2"/>
-    
+        android:visibility="gone" />
 
 </RelativeLayout>
