@@ -1,7 +1,9 @@
 package com.ratio.connectedcommuter.activities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -109,7 +111,7 @@ public class MainActivity extends Activity implements ActivityInterface {
 		initFootmarks();
 		
 		// Setup db
-		testDB();
+		//testDB();
 		
 		mQRDone.setOnClickListener(new OnClickListener() {
 
@@ -130,6 +132,8 @@ public class MainActivity extends Activity implements ActivityInterface {
 			}
 
 		});
+		
+		//Toast.makeText(this, Integer.toString(getTotalPoints()), Toast.LENGTH_SHORT).show();
 	}
 	
 	public void showQRModal(){
@@ -148,34 +152,45 @@ public class MainActivity extends Activity implements ActivityInterface {
 		mPointsModal.setVisibility(View.GONE);
 	}
 	
-	private Integer getTotalPoints() {
-		return 694;
-//		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
-//		return (Integer) person.getProperty(Constants.TOTAL_PTS);
-		
+	//This would be called to update the points when the user redeems their reward
+	private void updateTotalPoints(Integer additionalPoints) {
+		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
+		Integer points = (Integer) person.getProperty(Constants.TOTAL_PTS);
+		points += additionalPoints;
+		Map<String, Object> updatedProperties = new HashMap<String, Object>();
+		updatedProperties.putAll(person.getProperties());
+		updatedProperties.put (Constants.TOTAL_PTS, points);
+		CCApp.getInstance().updateDoc(CCApp.getInstance().getPersonId(), updatedProperties);
 	}
 	
+	//This would be called to add a rider to the car pool when the beacon recognizes a new user
+	private void addRiderToPool(Integer userId) {
+		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
+		List<Integer> riders = (List<Integer>) pool.getProperty(Constants.RIDERS);
+		riders.add(userId);
+		Map<String, Object> updatedProperties = new HashMap<String, Object>();
+		updatedProperties.putAll(pool.getProperties());
+		updatedProperties.put (Constants.RIDERS, riders);
+		CCApp.getInstance().updateDoc(CCApp.getInstance().getPersonId(), updatedProperties);
+	}
+		
+	//This would be called to add a rider to the car pool when the beacon recognizes a new user
+	private void getWeeklyDeals(String type) {
+		//query to get all documents of type deals - loop through them and return a list of deals
+	}
+	
+	//This would be called to return the current amount of total points the user has earned
+	private Integer getTotalPoints() {
+		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
+		Integer totalPoints = (Integer) person.getProperty(Constants.TOTAL_PTS);
+		return totalPoints;
+	}
+	
+	//This would be called to return a list of riders and display their profile images across the top of th emain page
 	@SuppressWarnings("unchecked")
 	private List<Integer> getRiders() {
-		
-		List<Integer> riders = new ArrayList<Integer>();
-		riders.add(R.drawable.avatars_14);
-		riders.add(R.drawable.avatars_15);
-		riders.add(R.drawable.avatars_16);
-		return riders;
-//		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
-//		return (List<Integer>) pool.getProperty(Constants.RIDERS);
-		
-	}
-	
-	private void testDB() {
-		
-//		String pts = getTotalPoints().toString();
-//		Toast.makeText(mContext, pts, Toast.LENGTH_SHORT).show();
-//		
-//		List<Integer> riders = getRiders();
-//		String size = Integer.toString(riders.size());
-//		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
+		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
+		return (List<Integer>) pool.getProperty(Constants.RIDERS);
 		
 	}
 	

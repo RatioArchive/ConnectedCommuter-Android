@@ -13,6 +13,7 @@ import java.util.Map;
 import android.content.Context;
 import android.provider.Settings.Secure;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -33,6 +34,9 @@ public class CCApp extends RatioApplication implements ILogger {
 	private static final String SYNC_URL_HTTP = "http://ec2-54-226-153-12.compute-1.amazonaws.com:4984/hack3/";
 	private String mDeviceId;
 	private String mPoolId;
+	
+	private String mPersonId;
+	private String mPoolDocId;
 	
 	private static String DB_NAME = "connected_car";
 	
@@ -121,52 +125,60 @@ public class CCApp extends RatioApplication implements ILogger {
 			    return;
 			}
 		}
-		
-		try {
-			Replication pullReplication = mDatabase.createPullReplication(new URL(SYNC_URL_HTTP));
-			pullReplication.setContinuous(true);
-			pullReplication.start();
-			Replication pushReplication = mDatabase.createPushReplication(new URL(SYNC_URL_HTTP));
-			pushReplication.setContinuous(true);
-	        pushReplication.start();
-		} catch (MalformedURLException e) {
-			// TODO Show this pretty like later
-			e.printStackTrace();
-		}
+		//This is where we synchronize with the cloud server
+//		try {
+//			Replication pullReplication = mDatabase.createPullReplication(new URL(SYNC_URL_HTTP));
+//			pullReplication.setContinuous(true);
+//			pullReplication.start();
+//			Replication pushReplication = mDatabase.createPushReplication(new URL(SYNC_URL_HTTP));
+//			pushReplication.setContinuous(true);
+//	        pushReplication.start();
+//		} catch (MalformedURLException e) {
+//			// TODO Show this pretty like later
+//			e.printStackTrace();
+//		}
         
-		Document personDoc = selectDoc(mDeviceId);
-		if (personDoc == null) {
+		//This is where we should be querying to see if our basic documents are created locally - these won't be sent to the server.
+		
+//		Document personDoc = selectDoc(mDeviceId);
+//		if (personDoc.getProperties() == null) {
 			// create an object that contains data for a person document
 			Map<String, Object> personProperties = new HashMap<String, Object>();
 			personProperties.put("_id", mDeviceId);
 			personProperties.put("type", "Person");
-			personProperties.put(Constants.PROFILE_IMG, R.id.btn);
+			personProperties.put(Constants.PROFILE_IMG, R.drawable.avatars_14);
 			personProperties.put(Constants.TOTAL_PTS, 694);
-		}
-		
-		Document poolDoc = selectDoc(mPoolId);
-		if (poolDoc == null) {
+			mPersonId = insertDoc(personProperties);
+//		}
+//		
+//		Document poolDoc = selectDoc(mPoolId);
+//		if (poolDoc.getProperties() == null) {
 			// create an object that contains data for a pool document
 			List<Integer> riders = new ArrayList<Integer>();
 			riders.add(R.id.btn);
+			riders.add(R.drawable.avatars_14);
+			riders.add(R.drawable.avatars_15);
+			riders.add(R.drawable.avatars_16);
 			Map<String, Object> poolProperties = new HashMap<String, Object>();
 			//figure out a better id
-			poolProperties.put("id", mPoolId);
+			poolProperties.put("_id", mPoolId);
 			poolProperties.put("type", "Pool");
 			poolProperties.put("start_datetime", "");
 			poolProperties.put("end_datetime", "");
 			poolProperties.put(Constants.RIDERS, riders);
-		}		
+			mPoolDocId = insertDoc(poolProperties);
+//		}		
 	}
 	
 	public String getPersonId() {
-		return mDeviceId;
+		return mPersonId;
 	}
 	
 	public String getPoolId() {
-		return mPoolId;
+		return mPoolDocId;
 	}
 	
+	//Update a document - with the replication on this will sync to the server automatically
 	public void updateDoc(String docID, Map<String, Object> data) {
 		Document retrievedDocument = this.selectDoc(docID);
 		
@@ -182,7 +194,8 @@ public class CCApp extends RatioApplication implements ILogger {
 		    Log.e (TAG, "Cannot update document", e);
 		}
 	}
-	
+
+	//Insert a document - with the replication on this will sync to the server automatically
 	public String insertDoc(Map<String, Object> data) {
 		// create an empty document
 		Document document = mDatabase.createDocument();
@@ -196,12 +209,14 @@ public class CCApp extends RatioApplication implements ILogger {
 		// save the ID of the new document
 		return document.getId(); 
 	}
-	
+
+	//Select a document
 	public Document selectDoc(String docID) {
 		// retrieve the document from the database
 		return mDatabase.getDocument(docID);
 	}
-	
+
+	//Delete a document - with the replication on this will sync to the server automatically
 	public void deleteDoc(String docID, Map<String, Object> data) {
 		Document retrievedDocument = this.selectDoc(docID);
 		// delete the document
