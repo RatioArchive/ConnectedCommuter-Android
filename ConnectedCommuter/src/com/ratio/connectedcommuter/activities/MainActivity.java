@@ -3,12 +3,16 @@ package com.ratio.connectedcommuter.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.Manager;
@@ -26,6 +30,7 @@ import com.ratio.connectedcommuter.fragments.ProgressFragment;
 import com.ratio.connectedcommuter.fragments.RewardFragment;
 import com.ratio.connectedcommuter.fragments.SponsoredContentFragment;
 import com.ratio.connectedcommuter.application.CCApp;
+import com.ratio.connectedcommuter.application.Constants;
 
 public class MainActivity extends Activity implements ActivityInterface {
 	
@@ -58,8 +63,6 @@ public class MainActivity extends Activity implements ActivityInterface {
 	private static String DB_NAME = "connected_car";
 
 	private Context mContext;
-	private Manager mManager;
-	private Database mDatabase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,26 +84,32 @@ public class MainActivity extends Activity implements ActivityInterface {
 		mContext = this;
 		// Init footmarks SDK - a 4.2+ device is required for this!
 		initFootmarks();
-		CCApp.getInstance().dbInit();
 		testDB();
+	}
+	
+	private Integer getTotalPoints() {
+		
+		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
+		return (Integer) person.getProperty(Constants.TOTAL_PTS);
+		
+	}
+	
+	private List<Integer> getRiders() {
+		
+		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
+		return (List<Integer>) pool.getProperty(Constants.RIDERS);
+		
 	}
 	
 	@SuppressLint("ShowToast")
 	private void testDB() {
 		
-		// create an object that contains data for a document
-		Map<String, Object> docContent = new HashMap<String, Object>();
-		docContent.put("message", "Hello Couchbase Lite");
-		docContent.put("creationDate", CCApp.getInstance().getCurrentDateTime());
+		String pts = getTotalPoints().toString();
+		Toast.makeText(mContext, pts, Toast.LENGTH_SHORT).show();
 		
-		// save the ID of the new document
-		String docID = CCApp.getInstance().insertDoc(docContent); 
-		
-		Document savedData = CCApp.getInstance().selectDoc(docID);
-		
-		String msg = (String) savedData.getProperty("message");
-		
-		Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+		List<Integer> riders = getRiders();
+		String size = Integer.toString(riders.size());
+		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void switchAppMode(AppMode appMode) {

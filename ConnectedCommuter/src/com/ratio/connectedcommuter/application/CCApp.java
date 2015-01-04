@@ -2,8 +2,10 @@ package com.ratio.connectedcommuter.application;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
@@ -28,9 +30,10 @@ public class CCApp extends RatioApplication implements ILogger {
 	
 	private static String DB_NAME = "connected_car";
 	
-	private Context mContext;
 	private Manager mManager;
 	private Database mDatabase;
+	private String mPersonDocId;
+	private String mPoolDocId;
 	
 	public static CCApp mInstance;
 
@@ -112,6 +115,29 @@ public class CCApp extends RatioApplication implements ILogger {
 			    return;
 			}
 		}
+		
+		// create an object that contains data for a person document
+		Map<String, Object> personDoc = new HashMap<String, Object>();
+		personDoc.put(Constants.PROFILE_IMG, R.id.btn);
+		personDoc.put(Constants.TOTAL_PTS, 694);
+		mPersonDocId = insertDoc(personDoc);
+
+		// create an object that contains data for a person document
+		List<Integer> riders = new ArrayList<Integer>();
+		riders.add(R.id.btn);
+		Map<String, Object> poolDoc = new HashMap<String, Object>();
+		poolDoc.put("start_datetime", "");
+		poolDoc.put("end_datetime", "");
+		poolDoc.put(Constants.RIDERS, riders);
+		mPoolDocId = insertDoc(poolDoc);
+	}
+	
+	public String getPersonId() {
+		return mPersonDocId;
+	}
+	
+	public String getPoolId() {
+		return mPoolDocId;
 	}
 	
 	public void updateDoc(String docID, Map<String, Object> data) {
