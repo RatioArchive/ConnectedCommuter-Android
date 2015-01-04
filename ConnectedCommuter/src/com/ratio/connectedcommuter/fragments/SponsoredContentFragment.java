@@ -23,6 +23,7 @@ public class SponsoredContentFragment extends BaseRatioFragment {
 		// Do init stuff
 		
 		
+		
 		return rootView;
 	}
 

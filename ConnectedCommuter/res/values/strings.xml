@@ -8,7 +8,9 @@
     <string name="todays_challenge">TODAYS CHALLENGE</string>
     <string name="point_bonus">100 POINT BONUS</string>
     <string name="got">Game of Thrones</string>
-    <string name="got_description">Tyrion tyrion tyrion tyrion tyrion tyrion Tyrion tyrion tyrion tyrion tyrion tyrion Tyrion tyrion tyrion tyrion tyrion tyrion Tyrion tyrion tyrion tyrion tyrion tyrion Tyrion tyrion tyrion tyrion tyrion tyrion Tyrion tyrion tyrion tyrion tyrion tyrion Tyrion tyrion tyrion tyrion tyrion tyrion</string>
-    <string name="starbucks">Starbucks Reward</string>
-    <string name="starbucks_description">Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks Starbucks</string>
+    <string name="got_description">Your RoyaltyRyde Points have reached a new milestone! 1000 points!  Your efforts have been rewarded with sponsored data to watch Game of Thrones: Season V!</string>
+    <string name="reward">Subway: 50% Off</string>
+    <string name="reward_description">For today only, come in to any Subway for a free drink with your \'Dragon Toasted Footlong,\' PLUS you will earn 100 points toward unlocking this weeks GoT Season V  sponsored data \'super reward\'. </string>
+    <string name="redeem">Redeem Reward</string>
+    <string name="nearest_location">take me to the nearest location</string>
 </resources>

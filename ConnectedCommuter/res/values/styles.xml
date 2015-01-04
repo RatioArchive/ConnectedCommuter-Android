@@ -22,11 +22,11 @@
     </style>
     
     <style name="CCCardViewTitle" parent="@style/RobotoBold" >
-        
+        <item name="android:textSize">24sp</item>
     </style>
     
     <style name="CCCardViewSubtext" parent="@style/RobotoRegular" >
-        
+        <item name="android:textSize">18sp</item>
     </style>
     
     <style name="CCCardViewButton" parent="@style/RobotoRegular" >
@@ -35,6 +35,14 @@
     
     <style name="MyPointsText" parent="@style/RobotoBold" >
         <item name="android:textSize">24sp</item>
+    </style>
+    
+    <style name="CCHeaderText" parent="@style/RobotoRegular">
+        <item name="android:textSize">24sp</item>
+    </style>
+    
+    <style name="CCLightText" parent="@style/RobotoLight">
+        <item name="android:textSize">16sp</item>
     </style>
     
     <style name="HelveticaNeue" >
