@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SponsoredDataVideoActivity"
+            android:name="com.ratio.connectedcommuter.activities.SponsoredDataVideoActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:screenOrientation="sensorLandscape" >
         </activity>
@@ -63,7 +63,7 @@
                 <action android:name="com.footmarkssdk.did_exit_region" />
             </intent-filter>
         </receiver>
-        //to listen for battery state and turn off/on scanning automatically
+        
         <receiver android:name="BatteryStateListener" >
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_BATTERY_LOW" />

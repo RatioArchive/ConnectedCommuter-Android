@@ -1,10 +1,16 @@
 package com.ratio.connectedcommuter.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,37 +32,54 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
 	VideoView sponsoredVideo;
 	MediaController mController;
 	
+	Uri videoUri;
+	Uri sponsoredUri;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	Log.v(TAG, "Test comment");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sponsored_data_video);
         
-        SmiResult sr = SmiSdk.getSDAuth(this, url, userId, appId);
-        int state  = sr.getState();
+        videoUri = Uri.parse(url);
+        SmiResult sr = null;
+        int state = -1;
+        try{
+        	sr = SmiSdk.getSDAuth(this, url, userId, appId);
+        	state  = sr.getState();
+        } catch(Exception e) {
+        	
+        }
         Log.v(TAG, "state = " + state);
+        ImageView sponsoredIV = (ImageView) findViewById(R.id.ivSponsored);
+        sponsoredVideo = (VideoView)findViewById(R.id.testVideo);
+        if(state == SmiResult.WIFI || state == -1) {
+        	sponsoredIV.setVisibility(View.GONE);
+        	
+        	mController = new MediaController(this);
+        	sponsoredVideo.setVideoURI(videoUri);
+        	mController.setMediaPlayer(sponsoredVideo);
+        	sponsoredVideo.setMediaController(mController);
+        	sponsoredVideo.setOnCompletionListener(this);
+        	sponsoredVideo.start();
+        }
         // get sponsored data url
-        String sdUrl = sr.getUrl();
         if(state == SmiResult.SD_AVAILABLE) {
         	Log.v(TAG, "SD_AVAILABLE");
         	//1. use 'http://s3.amazonaws.com/sdmsg/sponsored/msg.png' logo to display sponsored message
             //2. use the 'sdUrl' for requesting the content
-        	ImageView sponsoredIV = (ImageView) findViewById(R.id.ivSponsored);
         	sponsoredIV.setVisibility(View.VISIBLE);
         	
         	mController = new MediaController(this);
         	
-        	sponsoredVideo = (VideoView)findViewById(R.id.testVideo);
-        	Uri videoUri = Uri.parse(sdUrl);
-        	sponsoredVideo.setVideoURI(videoUri);
-        	
+        	String sdUrl = sr.getUrl();
+        	sponsoredUri = Uri.parse(sdUrl);
+        	sponsoredVideo.setVideoURI(sponsoredUri);
         	
         	mController.setMediaPlayer(sponsoredVideo);
         	sponsoredVideo.setMediaController(mController);
         	sponsoredVideo.setOnCompletionListener(this);
-        	
         	sponsoredVideo.start();
-        	
         } else if(state == SmiResult.SD_NOT_AVAILABLE) {
         	// non sponsored connection
         	Log.v(TAG, "SD_NOT_AVAILABLE");
@@ -128,5 +151,25 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
 			finish();
 		}
 	}
+	
+	public static NetworkInfo getNetworkInfo(Context context){
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo();
+    }
+
+    public static boolean isConnected(Context context){
+        NetworkInfo info = getNetworkInfo(context);
+        return (info != null && info.isConnected());
+    }
+
+    public static boolean isConnectedWifi(Context context){
+        NetworkInfo info = getNetworkInfo(context);
+        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI);
+    }
+
+    public static boolean isConnectedMobile(Context context){
+        NetworkInfo info = getNetworkInfo(context);
+        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_MOBILE);
+    }
 }
 

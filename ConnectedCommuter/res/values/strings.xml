@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">RoyaltyRyde</string>
+    <string name="app_name">PayRyde</string>
     <string name="active_ride">Active Ride</string>
     <string name="three_riders">3 riders</string>
     <string name="four_riders">4 riders</string>
     <string name="fifteen_to_arrival">15 minutes to arrival</string>
-    <string name="my_points">MY POINTS</string>
+    <string name="my_points">My Points</string>
     <string name="todays_challenge">TODAYS CHALLENGE</string>
     <string name="point_bonus">100 POINT BONUS</string>
     <string name="got">Game of Thrones</string>
@@ -13,4 +13,6 @@
     <string name="reward_description">For today only, come in to any Subway for a free drink with your \'Dragon Toasted Footlong,\' PLUS you will earn 100 points toward unlocking this weeks GoT Season V  sponsored data \'super reward\'. </string>
     <string name="redeem">Redeem Reward</string>
     <string name="nearest_location">take me to the nearest location</string>
+    <string name="daily_bonus">Daily Bonus</string>
+    <string name="daily_bonus_description">By stopping into a local Subway you will unlock a webisode of the Game of Thrones. Your data stream free.</string>
 </resources>

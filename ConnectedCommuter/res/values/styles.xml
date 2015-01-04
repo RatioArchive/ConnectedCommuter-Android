@@ -38,11 +38,15 @@
     </style>
     
     <style name="CCHeaderText" parent="@style/RobotoRegular">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    
+    <style name="CCHeaderTextLite" parent="@style/RobotoBold">
+        <item name="android:textSize">16sp</item>
     </style>
     
     <style name="CCLightText" parent="@style/RobotoLight">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
     
     <style name="HelveticaNeue" >

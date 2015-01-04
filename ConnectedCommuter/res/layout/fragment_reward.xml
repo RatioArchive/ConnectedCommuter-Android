@@ -35,6 +35,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/reward_description"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/cc_cardview_bg_color" />
+    
+    <com.ratio.common.views.FontableTextView
+        style="@style/CCHeaderTextLite"
+        android:id="@+id/tv_Bonus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/daily_bonus"
+        android:background="@color/cc_cardview_bg_color" />
+    
+    <com.ratio.common.views.FontableTextView
+        style="@style/CCLightText"
+        android:id="@+id/tvBonusDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/daily_bonus_description"
         android:background="@color/cc_cardview_bg_color" />
     
     <include
