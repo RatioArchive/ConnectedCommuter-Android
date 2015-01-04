@@ -63,7 +63,7 @@
                 <action android:name="com.footmarkssdk.did_exit_region" />
             </intent-filter>
         </receiver>
-        //to listen for battery state and turn off/on scanning automatically
+        
         <receiver android:name="BatteryStateListener" >
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_BATTERY_LOW" />

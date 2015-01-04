@@ -37,14 +37,14 @@
 
         <com.ratio.common.views.FontableTextView
             android:id="@+id/my_points"
-            style="@style/MyPointsText"
+            style="@style/CCCardViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/my_points" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:orientation="horizontal" >
 
             <ImageView
@@ -65,7 +65,7 @@
             <RelativeLayout
                 android:id="@+id/my_points_multiplier_layout"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="100dp"
                 android:layout_weight="1" >
 
                 <com.ratio.common.views.FontableTextView

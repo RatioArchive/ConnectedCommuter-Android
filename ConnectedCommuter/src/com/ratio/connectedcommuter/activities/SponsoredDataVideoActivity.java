@@ -42,17 +42,28 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
         setContentView(R.layout.activity_sponsored_data_video);
         
         videoUri = Uri.parse(url);
-        SmiResult sr = SmiSdk.getSDAuth(this, url, userId, appId);
-        int state  = sr.getState();
+        SmiResult sr = null;
+        int state = -1;
+        try{
+        	sr = SmiSdk.getSDAuth(this, url, userId, appId);
+        	state  = sr.getState();
+        } catch(Exception e) {
+        	
+        }
         Log.v(TAG, "state = " + state);
         ImageView sponsoredIV = (ImageView) findViewById(R.id.ivSponsored);
         sponsoredVideo = (VideoView)findViewById(R.id.testVideo);
-        if(state == SmiResult.WIFI) {
+        if(state == SmiResult.WIFI || state == -1) {
+        	sponsoredIV.setVisibility(View.GONE);
+        	
+        	mController = new MediaController(this);
         	sponsoredVideo.setVideoURI(videoUri);
+        	mController.setMediaPlayer(sponsoredVideo);
+        	sponsoredVideo.setMediaController(mController);
+        	sponsoredVideo.setOnCompletionListener(this);
         	sponsoredVideo.start();
         }
         // get sponsored data url
-        String sdUrl = sr.getUrl();
         if(state == SmiResult.SD_AVAILABLE) {
         	Log.v(TAG, "SD_AVAILABLE");
         	//1. use 'http://s3.amazonaws.com/sdmsg/sponsored/msg.png' logo to display sponsored message
@@ -61,13 +72,13 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
         	
         	mController = new MediaController(this);
         	
+        	String sdUrl = sr.getUrl();
         	sponsoredUri = Uri.parse(sdUrl);
         	sponsoredVideo.setVideoURI(sponsoredUri);
         	
         	mController.setMediaPlayer(sponsoredVideo);
         	sponsoredVideo.setMediaController(mController);
         	sponsoredVideo.setOnCompletionListener(this);
-        	
         	sponsoredVideo.start();
         } else if(state == SmiResult.SD_NOT_AVAILABLE) {
         	// non sponsored connection
