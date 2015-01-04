@@ -1,11 +1,17 @@
 package com.ratio.connectedcommuter.activities;
 
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import java.util.HashMap;
+import java.util.Map;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
-
+import android.widget.Toast;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.Manager;
 import com.footmarks.footmarkssdk.FootmarksBase;
 import com.footmarks.footmarkssdk.FootmarksBase.InitCallback;
 import com.ratio.common.fragments.BaseRatioFragment;
@@ -19,6 +25,7 @@ import com.ratio.connectedcommuter.fragments.MapFragment;
 import com.ratio.connectedcommuter.fragments.ProgressFragment;
 import com.ratio.connectedcommuter.fragments.RewardFragment;
 import com.ratio.connectedcommuter.fragments.SponsoredContentFragment;
+import com.ratio.connectedcommuter.application.CCApp;
 
 public class MainActivity extends Activity implements ActivityInterface {
 	
@@ -48,6 +55,11 @@ public class MainActivity extends Activity implements ActivityInterface {
 		SPONSORED_CONTENT,
 		REWARD
 	}
+	private static String DB_NAME = "connected_car";
+
+	private Context mContext;
+	private Manager mManager;
+	private Database mDatabase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +78,29 @@ public class MainActivity extends Activity implements ActivityInterface {
 		
 		// Setup ActionBar
 		initActionBar();
-				
+		mContext = this;
 		// Init footmarks SDK - a 4.2+ device is required for this!
 		initFootmarks();
+		CCApp.getInstance().dbInit();
+		testDB();
+	}
+	
+	@SuppressLint("ShowToast")
+	private void testDB() {
+		
+		// create an object that contains data for a document
+		Map<String, Object> docContent = new HashMap<String, Object>();
+		docContent.put("message", "Hello Couchbase Lite");
+		docContent.put("creationDate", CCApp.getInstance().getCurrentDateTime());
+		
+		// save the ID of the new document
+		String docID = CCApp.getInstance().insertDoc(docContent); 
+		
+		Document savedData = CCApp.getInstance().selectDoc(docID);
+		
+		String msg = (String) savedData.getProperty("message");
+		
+		Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void switchAppMode(AppMode appMode) {
