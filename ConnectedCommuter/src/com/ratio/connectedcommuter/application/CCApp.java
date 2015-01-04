@@ -29,6 +29,10 @@ public class CCApp extends RatioApplication implements ILogger {
         fontMap.put("HelveticaNeueMedium", R.raw.helvetica_neue_medium);
         fontMap.put("HelveticaNeueUltraLight", R.raw.helvetica_neue_ultra_light);
         fontMap.put("HelveticaNeue", R.raw.helvetica_neue);
+        fontMap.put("RobotoBlack", R.raw.roboto_black);
+        fontMap.put("RobotoBold", R.raw.roboto_bold);
+        fontMap.put("RobotoLight", R.raw.roboto_light);
+        fontMap.put("RobotoRegular", R.raw.roboto_regular);
         FontUtils.setFontMap(fontMap);
     }
 

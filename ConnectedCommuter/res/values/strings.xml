@@ -1,5 +1,10 @@
 <resources>
 
     <string name="app_name">RoyaltyRyde</string>
+    
+    <string name="active_ride">Active Ride</string>
+    <string name="three_riders">3 riders</string>
+    <string name="four_riders">4 riders</string>
+    <string name="fifteen_to_arrival">15 minutes to arrival</string>
 
 </resources>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -15,6 +15,22 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="CCCardViewBg" >
+        <item name="android:background">@color/cc_cardview_bg_color</item>
+    </style>
+    
+    <style name="CCCardViewTitle" parent="@style/RobotoBold" >
+        
+    </style>
+    
+    <style name="CCCardViewSubtext" parent="@style/RobotoRegular" >
+        
+    </style>
+    
+    <style name="CCCardViewButton" parent="@style/RobotoRegular" >
+        <item name="android:src">@drawable/ic_launcher</item>
     </style>
     
     <style name="HelveticaNeue" >
@@ -43,6 +59,22 @@
     
     <style name="HelveticaNeueUltraLight" >
         <item name="custom_font">HelveticaNeueUltraLight</item>
+    </style>
+    
+    <style name="RobotoBold" >
+        <item name="custom_font">RobotoBold</item>
+    </style>
+    
+    <style name="RobotoBlack" >
+        <item name="custom_font">RobotoBlack</item>
+    </style>
+    
+    <style name="RobotoLight" >
+        <item name="custom_font">RobotoLight</item>
+    </style>
+    
+    <style name="RobotoRegular" >
+        <item name="custom_font">RobotoRegular</item>
     </style>
 
 </resources>
