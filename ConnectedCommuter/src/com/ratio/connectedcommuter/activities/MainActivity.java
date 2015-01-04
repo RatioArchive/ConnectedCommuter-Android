@@ -16,6 +16,7 @@ import java.util.List;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.couchbase.lite.Document;
@@ -56,6 +57,8 @@ public class MainActivity extends Activity implements ActivityInterface {
 	private SponsoredContentFragment mSponsoredContentFragment;
 	private View mQRModal;
 	private View mPointsModal;
+	private View mQRDone;
+	private View mPointsDone;
 	
 	private AppMode mAppMode;
 	
@@ -88,6 +91,8 @@ public class MainActivity extends Activity implements ActivityInterface {
 		
 		mQRModal = findViewById(R.id.qr_code_modal);
 		mPointsModal = findViewById(R.id.points_modal);
+		mQRDone = findViewById(R.id.qr_done);
+		mPointsDone = findViewById(R.id.points_done);
 		
 		// Setup ActionBar
 		initActionBar();
@@ -100,21 +105,40 @@ public class MainActivity extends Activity implements ActivityInterface {
 		
 		// Setup db
 		testDB();
+		
+		mQRDone.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				hideQRModal();
+				showPointsModal();
+			}
+
+		});
+		
+		mPointsDone.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				hidePointsModal();
+			}
+
+		});
 	}
 	
-	private void showQRModal(){
+	public void showQRModal(){
 		mQRModal.setVisibility(View.VISIBLE);
 	}
 	
-	private void hideQRModal(){
+	public void hideQRModal(){
 		mQRModal.setVisibility(View.GONE);
 	}
 	
-	private void showPointsModal(){
+	public void showPointsModal(){
 		mPointsModal.setVisibility(View.VISIBLE);
 	}
 	
-	private void hidePointsModal(){
+	public void hidePointsModal(){
 		mPointsModal.setVisibility(View.GONE);
 	}
 	
@@ -146,6 +170,10 @@ public class MainActivity extends Activity implements ActivityInterface {
 //		List<Integer> riders = getRiders();
 //		String size = Integer.toString(riders.size());
 //		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
+		
+	}
+	
+	public void onRewardsUnlocked(){
 		
 	}
 	

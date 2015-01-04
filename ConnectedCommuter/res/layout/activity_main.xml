@@ -19,7 +19,7 @@
 	    
         <RelativeLayout 
 	        android:layout_width="260dp"
-	        android:layout_height="320dp"
+	        android:layout_height="340dp"
 		    android:background="@color/white"
 		    android:layout_centerInParent="true"
 		    android:orientation="vertical"
@@ -55,13 +55,15 @@
 		        android:layout_centerInParent="true"
 		        android:layout_below="@id/qr_desc"/>
 		    
-		    <com.ratio.common.views.FontableTextView
+		    <Button
+		        android:id="@+id/qr_done"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        style="@style/modal_bottom_desc" 
 		        android:text="Done"
-		        android:gravity="center_horizontal"
+		        android:gravity="center"
 		        android:layout_alignParentBottom="true"
+		    	android:background="@color/white"
 		        />
 		    
 	    </RelativeLayout>
@@ -78,7 +80,7 @@
 	    
         <RelativeLayout 
 	        android:layout_width="260dp"
-	        android:layout_height="320dp"
+	        android:layout_height="340dp"
 		    android:background="@color/white"
 		    android:layout_centerInParent="true"
 		    android:orientation="vertical"
@@ -126,14 +128,16 @@
 		        android:id="@+id/points_total"
 		        />
 
-		    <com.ratio.common.views.FontableTextView
+		    <Button
+		        android:id="@+id/points_done"
 		        style="@style/modal_bottom_desc"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_margin="10dp"
-		        android:gravity="center_horizontal|bottom"
+		        android:gravity="center"
 		        android:text="Done"
-		        android:layout_alignParentBottom="true" />
+		        android:layout_alignParentBottom="true"
+		    	android:background="@color/white" />
 		    
 	    </RelativeLayout>
 	    

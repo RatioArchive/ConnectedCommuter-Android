@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.ratio.common.fragments.BaseRatioFragment;
@@ -39,6 +40,15 @@ public class RewardFragment extends BaseRatioFragment {
 		FontableTextView subtext2 = (FontableTextView)cardView.findViewById(R.id.subtext2);
 		subtext2.setText(" ");
 		//FontableTextView title = (FontableTextView)cardView.findViewById(R.id.title);
+		
+		cardView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				mActivity.showQRModal();
+			}
+
+		});
 		
 		return rootView;
 	}
