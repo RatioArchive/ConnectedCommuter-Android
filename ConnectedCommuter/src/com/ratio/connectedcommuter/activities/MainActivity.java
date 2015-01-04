@@ -1,27 +1,27 @@
 package com.ratio.connectedcommuter.activities;
 
+import java.util.List;
+
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
-import com.couchbase.lite.Manager;
+import com.footmarks.footmarkssdk.FMBeacon;
 import com.footmarks.footmarkssdk.FootmarksBase;
 import com.footmarks.footmarkssdk.FootmarksBase.InitCallback;
+import com.footmarks.footmarkssdk.FootmarksSdkBroadcastReceiver;
+import com.footmarks.footmarkssdk.model.Experience;
 import com.ratio.common.fragments.BaseRatioFragment;
 import com.ratio.common.interfaces.ActivityInterface;
 import com.ratio.common.utils.Logger;
 import com.ratio.connectedcommuter.R;
+import com.ratio.connectedcommuter.application.CCApp;
+import com.ratio.connectedcommuter.application.Constants;
 import com.ratio.connectedcommuter.fragments.AutoFragment;
 import com.ratio.connectedcommuter.fragments.BikeFragment;
 import com.ratio.connectedcommuter.fragments.BusFragment;
@@ -29,8 +29,6 @@ import com.ratio.connectedcommuter.fragments.MapFragment;
 import com.ratio.connectedcommuter.fragments.ProgressFragment;
 import com.ratio.connectedcommuter.fragments.RewardFragment;
 import com.ratio.connectedcommuter.fragments.SponsoredContentFragment;
-import com.ratio.connectedcommuter.application.CCApp;
-import com.ratio.connectedcommuter.application.Constants;
 
 public class MainActivity extends Activity implements ActivityInterface {
 	
@@ -230,5 +228,44 @@ public class MainActivity extends Activity implements ActivityInterface {
 	@Override
 	public boolean isLandscape() {
 		return false;
+	}
+	
+	public static class CCFootmarksSdkBroadcastReceiver extends
+		FootmarksSdkBroadcastReceiver {
+		
+		private static final String RECEIVER_TAG = CCFootmarksSdkBroadcastReceiver.class.getSimpleName();
+		
+		public CCFootmarksSdkBroadcastReceiver() {
+		}
+		
+		@Override
+		public void didCompleteExperiences(FMBeacon beacon, List<Experience> experiences) {
+			Logger.Logd(RECEIVER_TAG, "didCompleteExperiences: " + beacon);
+			Logger.Logd(RECEIVER_TAG, "experiences: " + experiences);
+		
+		}
+		
+		@Override
+		public void didEnterRegion(FMBeacon beacon) {
+			Logger.Logd(RECEIVER_TAG, "didEnterRegion: " + beacon);
+			Toast.makeText(CCApp.getInstance(), "didEnterRegion", Toast.LENGTH_SHORT).show();
+		}
+		
+		@Override
+		public void didExitRegion(List<FMBeacon> beacons) {
+			Logger.Logd(RECEIVER_TAG, "didExitRegion: " + beacons);
+			Toast.makeText(CCApp.getInstance(), "didExitRegion", Toast.LENGTH_SHORT).show();
+		}
+		
+		@Override
+		public void didRangeBeacons(List<FMBeacon> beacons) {
+			Logger.Logd(RECEIVER_TAG, "didRangeBeacons: " + beacons);
+		}
+		
+		@Override
+		public void onBeaconDiscovered(FMBeacon beacon) {
+			Logger.Logd(RECEIVER_TAG, "onBeaconDiscovered: " + beacon);
+		}
+		
 	}
 }
