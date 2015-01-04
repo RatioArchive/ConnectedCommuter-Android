@@ -88,6 +88,7 @@ public class ProgressFragment extends BaseRatioFragment {
 		RelativeLayout.LayoutParams params = (LayoutParams) mPointsBar.getLayoutParams();
 		params.topMargin = 0;
 		mPointsBar.setText("1000");
+		mPointsBar.setCompoundDrawables(null, null, null, getResources().getDrawable(R.drawable.small_check_29));
 	}
 
 }

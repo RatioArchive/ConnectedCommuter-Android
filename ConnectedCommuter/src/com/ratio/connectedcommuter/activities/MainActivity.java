@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements ActivityInterface {
 	private static final String USER_ID = null;
 	
 	private BaseRatioFragment mCurrentFragment;
-	private AutoFragment mAutoFragment;
+	private static AutoFragment mAutoFragment;
 	private BikeFragment mBikeFragment;
 	private BusFragment mBusFragment;
 	private ProgressFragment mProgressFragment;
@@ -367,16 +367,22 @@ public class MainActivity extends Activity implements ActivityInterface {
 		
 		}
 		
+		private boolean mHasEntered = false;
 		@Override
 		public void didEnterRegion(FMBeacon beacon) {
 			Logger.Logd(RECEIVER_TAG, "didEnterRegion: " + beacon);
-			Toast.makeText(CCApp.getInstance(), "didEnterRegion", Toast.LENGTH_SHORT).show();
+			
+			if (beacon.getMacAddress().equals("7a403335cbf9") && !mHasEntered) {
+				Toast.makeText(CCApp.getInstance(), "Beacon region entered: In Car Beacon", Toast.LENGTH_SHORT).show();
+				mAutoFragment.onRiderAdded();
+				mHasEntered = true;
+			}
 		}
 		
 		@Override
 		public void didExitRegion(List<FMBeacon> beacons) {
 			Logger.Logd(RECEIVER_TAG, "didExitRegion: " + beacons);
-			Toast.makeText(CCApp.getInstance(), "didExitRegion", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(CCApp.getInstance(), "Beacon region exited: ", Toast.LENGTH_SHORT).show();
 		}
 		
 		@Override
