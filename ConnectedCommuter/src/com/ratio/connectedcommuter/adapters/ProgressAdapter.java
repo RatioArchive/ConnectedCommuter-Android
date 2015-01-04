@@ -16,28 +16,38 @@ public class ProgressAdapter extends BaseAdapter {
 
 	private List<ProgressItem> mItems;
 	
-	private class ProgressItem {
+	public class ProgressItem {
 		String title;
 		String subtext1;
 		String subtext2;
 		int imageId;
+		public boolean enabled;
 		
-		private ProgressItem(String title, String subtext1, String subtext2, int imageId) {
+		private ProgressItem(String title, String subtext1, String subtext2, int imageId, boolean enabled) {
 			this.title = title;
 			this.subtext1 = subtext1;
 			this.subtext2 = subtext2;
 			this.imageId = imageId;
+			this.enabled = enabled;
+		}
+		
+		public boolean isEnabled() {
+			return enabled;
 		}
 	}
 	
 	public ProgressAdapter() {
 		mItems = new ArrayList<ProgressItem>();
-		mItems.add(new ProgressItem("Game of Thrones - Season 5", "Achieve 1,000 points for this week to win this Royal Prize!", null, R.drawable.got_hero_30));
-		mItems.add(new ProgressItem("Subway - Free Drink", "Friday", "Upcoming", R.drawable.offer_subway));
-		mItems.add(new ProgressItem("Starbucks - Free Shot", "Thursday", "Upcoming", R.drawable.offer_sbux));
-		mItems.add(new ProgressItem("Subway - 50% Off", "Wednesday", "Today's Challenge", R.drawable.offer_subway));
-		mItems.add(new ProgressItem("McDonald's - $2 Off", "Tuesday", "Completed", R.drawable.offer_mcdonalds));
-		mItems.add(new ProgressItem("Starbucks - Free Drip", "Monday", "Completed", R.drawable.offer_sbux));
+		mItems.add(new ProgressItem("Game of Thrones - Season 5", "Achieve 1,000 points for this week to win this Royal Prize!", null, R.drawable.got_hero_30, false));
+		mItems.add(new ProgressItem("Subway - Free Drink", "Friday", "Upcoming", R.drawable.offer_subway, false));
+		mItems.add(new ProgressItem("Starbucks - Free Shot", "Thursday", "Upcoming", R.drawable.offer_sbux, false));
+		mItems.add(new ProgressItem("Subway - 50% Off", "Wednesday", "Today's Challenge", R.drawable.offer_subway, true));
+		mItems.add(new ProgressItem("McDonald's - $2 Off", "Tuesday", "Completed", R.drawable.offer_mcdonalds, true));
+		mItems.add(new ProgressItem("Starbucks - Free Drip", "Monday", "Completed", R.drawable.offer_sbux, true));
+	}
+	
+	public void enableItem(int position) {
+		getItem(position).enabled = true;
 	}
 
 	@Override
@@ -79,6 +89,14 @@ public class ProgressAdapter extends BaseAdapter {
 			subtext2.setText("");
 		}
 		imageView.setImageResource(item.imageId);
+		
+		// Handle alpha
+		if (item.enabled) {
+			convertView.setAlpha(1f);
+		} else {
+			convertView.setAlpha(.5f);
+		}
+		
 		return convertView;
 	}
 	
