@@ -1,13 +1,21 @@
 package com.ratio.connectedcommuter.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentTransaction;
+
+import java.util.List;
+
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.couchbase.lite.Document;
@@ -46,6 +54,8 @@ public class MainActivity extends Activity implements ActivityInterface {
 	private MapFragment mMapFragment;
 	private RewardFragment mRewardFragment;
 	private SponsoredContentFragment mSponsoredContentFragment;
+	private View mQRModal;
+	private View mPointsModal;
 	
 	private AppMode mAppMode;
 	
@@ -58,7 +68,6 @@ public class MainActivity extends Activity implements ActivityInterface {
 		SPONSORED_CONTENT,
 		REWARD
 	}
-	private static String DB_NAME = "connected_car";
 
 	private Context mContext;
 
@@ -77,6 +86,9 @@ public class MainActivity extends Activity implements ActivityInterface {
 		mRewardFragment = new RewardFragment();
 		mSponsoredContentFragment = new SponsoredContentFragment();
 		
+		mQRModal = findViewById(R.id.qr_code_modal);
+		mPointsModal = findViewById(R.id.points_modal);
+		
 		// Setup ActionBar
 		initActionBar();
 		mContext = this;
@@ -90,29 +102,51 @@ public class MainActivity extends Activity implements ActivityInterface {
 		testDB();
 	}
 	
+	private void showQRModal(){
+		mQRModal.setVisibility(View.VISIBLE);
+	}
+	
+	private void hideQRModal(){
+		mQRModal.setVisibility(View.GONE);
+	}
+	
+	private void showPointsModal(){
+		mPointsModal.setVisibility(View.VISIBLE);
+	}
+	
+	private void hidePointsModal(){
+		mPointsModal.setVisibility(View.GONE);
+	}
+	
 	private Integer getTotalPoints() {
-		
-		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
-		return (Integer) person.getProperty(Constants.TOTAL_PTS);
+		return 694;
+//		Document person = CCApp.getInstance().selectDoc(CCApp.getInstance().getPersonId());
+//		return (Integer) person.getProperty(Constants.TOTAL_PTS);
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private List<Integer> getRiders() {
 		
-		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
-		return (List<Integer>) pool.getProperty(Constants.RIDERS);
+		List<Integer> riders = new ArrayList<Integer>();
+		riders.add(R.drawable.avatars_14);
+		riders.add(R.drawable.avatars_15);
+		riders.add(R.drawable.avatars_16);
+		return riders;
+//		Document pool = CCApp.getInstance().selectDoc(CCApp.getInstance().getPoolId());
+//		return (List<Integer>) pool.getProperty(Constants.RIDERS);
 		
 	}
 	
-	@SuppressLint("ShowToast")
 	private void testDB() {
 		
-		String pts = getTotalPoints().toString();
-		Toast.makeText(mContext, pts, Toast.LENGTH_SHORT).show();
+//		String pts = getTotalPoints().toString();
+//		Toast.makeText(mContext, pts, Toast.LENGTH_SHORT).show();
+//		
+//		List<Integer> riders = getRiders();
+//		String size = Integer.toString(riders.size());
+//		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
 		
-		List<Integer> riders = getRiders();
-		String size = Integer.toString(riders.size());
-		Toast.makeText(mContext, size, Toast.LENGTH_SHORT).show();
 	}
 	
 	public void switchAppMode(AppMode appMode) {

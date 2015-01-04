@@ -2,4 +2,6 @@
 <resources>
     <color name="cc_cardview_bg_color">#f9f9f9</color>
     <color name="app_red">#f15f43</color>
+    <color name="overlay_bg_color">#4D000000</color>
+    <color name="white">#ffffff</color>
 </resources>

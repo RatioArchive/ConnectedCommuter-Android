@@ -1,6 +1,8 @@
 package com.ratio.connectedcommuter.application;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.provider.Settings.Secure;
 import android.util.Log;
 
 import com.couchbase.lite.CouchbaseLiteException;
@@ -16,24 +19,25 @@ import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.Manager;
 import com.couchbase.lite.android.AndroidContext;
+import com.couchbase.lite.replicator.Replication;
 import com.ratio.common.application.RatioApplication;
 import com.ratio.common.interfaces.ILogger;
 import com.ratio.common.utils.FontUtils;
 import com.ratio.common.utils.Logger;
 import com.ratio.connectedcommuter.R;
-import com.ratio.connectedcommuter.domain.DBManager;
 
 public class CCApp extends RatioApplication implements ILogger {
 
 	private static final boolean LOGGING_ENABLED = true;
 	private static final String TAG = CCApp.class.getSimpleName();
+	private static final String SYNC_URL_HTTP = "http://ec2-54-226-153-12.compute-1.amazonaws.com:4984/hack3/";
+	private String mDeviceId;
+	private String mPoolId;
 	
 	private static String DB_NAME = "connected_car";
 	
 	private Manager mManager;
 	private Database mDatabase;
-	private String mPersonDocId;
-	private String mPoolDocId;
 	
 	public static CCApp mInstance;
 
@@ -45,6 +49,8 @@ public class CCApp extends RatioApplication implements ILogger {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        mDeviceId = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+        mPoolId = mDeviceId + "_pool";
         dbInit();
     }    
        
@@ -116,28 +122,49 @@ public class CCApp extends RatioApplication implements ILogger {
 			}
 		}
 		
-		// create an object that contains data for a person document
-		Map<String, Object> personDoc = new HashMap<String, Object>();
-		personDoc.put(Constants.PROFILE_IMG, R.id.btn);
-		personDoc.put(Constants.TOTAL_PTS, 694);
-		mPersonDocId = insertDoc(personDoc);
-
-		// create an object that contains data for a person document
-		List<Integer> riders = new ArrayList<Integer>();
-		riders.add(R.id.btn);
-		Map<String, Object> poolDoc = new HashMap<String, Object>();
-		poolDoc.put("start_datetime", "");
-		poolDoc.put("end_datetime", "");
-		poolDoc.put(Constants.RIDERS, riders);
-		mPoolDocId = insertDoc(poolDoc);
+		try {
+			Replication pullReplication = mDatabase.createPullReplication(new URL(SYNC_URL_HTTP));
+			pullReplication.setContinuous(true);
+			pullReplication.start();
+			Replication pushReplication = mDatabase.createPushReplication(new URL(SYNC_URL_HTTP));
+			pushReplication.setContinuous(true);
+	        pushReplication.start();
+		} catch (MalformedURLException e) {
+			// TODO Show this pretty like later
+			e.printStackTrace();
+		}
+        
+		Document personDoc = selectDoc(mDeviceId);
+		if (personDoc == null) {
+			// create an object that contains data for a person document
+			Map<String, Object> personProperties = new HashMap<String, Object>();
+			personProperties.put("_id", mDeviceId);
+			personProperties.put("type", "Person");
+			personProperties.put(Constants.PROFILE_IMG, R.id.btn);
+			personProperties.put(Constants.TOTAL_PTS, 694);
+		}
+		
+		Document poolDoc = selectDoc(mPoolId);
+		if (poolDoc == null) {
+			// create an object that contains data for a pool document
+			List<Integer> riders = new ArrayList<Integer>();
+			riders.add(R.id.btn);
+			Map<String, Object> poolProperties = new HashMap<String, Object>();
+			//figure out a better id
+			poolProperties.put("id", mPoolId);
+			poolProperties.put("type", "Pool");
+			poolProperties.put("start_datetime", "");
+			poolProperties.put("end_datetime", "");
+			poolProperties.put(Constants.RIDERS, riders);
+		}		
 	}
 	
 	public String getPersonId() {
-		return mPersonDocId;
+		return mDeviceId;
 	}
 	
 	public String getPoolId() {
-		return mPoolDocId;
+		return mPoolId;
 	}
 	
 	public void updateDoc(String docID, Map<String, Object> data) {
