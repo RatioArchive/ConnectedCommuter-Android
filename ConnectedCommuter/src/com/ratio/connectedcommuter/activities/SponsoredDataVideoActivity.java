@@ -45,7 +45,6 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
         setContentView(R.layout.activity_sponsored_data_video);
         
         rootActivity = this;
-        
         demoVideoPath = "android.resource://" + getPackageName() + "/" + R.raw.got_s04e10;
         if(demo) {
         	videoUri = Uri.parse(demoVideoPath);
@@ -59,7 +58,7 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
         	sr = SmiSdk.getSDAuth(this, url, userId, appId);
         	state  = sr.getState();
         } catch(Exception e) {
-        	
+        	Log.v(TAG, "EXCEPTION");
         }
         Log.v(TAG, "state = " + state);
         ImageView sponsoredIV = (ImageView) findViewById(R.id.ivSponsored);
@@ -214,14 +213,22 @@ public class SponsoredDataVideoActivity extends Activity implements MediaPlayerC
         	} else if(isConnectedMobile(context)) {
         		ImageView sponsoredIV = (ImageView) findViewById(R.id.ivSponsored);
                 sponsoredVideo = (VideoView)findViewById(R.id.testVideo);
-                SmiResult sr = SmiSdk.getSDAuth(rootActivity, url, userId, appId);
-                int state  = sr.getState();
+                SmiResult sr = null;
+                int state = -1;
+                try{
+                	sr = SmiSdk.getSDAuth(rootActivity, url, userId, appId);
+                	state  = sr.getState();
+                } catch(Exception e) {
+                	Log.v(TAG, "EXCEPTION");
+                }
                 if(state == SmiResult.SD_AVAILABLE) {
                 	String sdUrl = "";
                 	if(demo) {
                 		sdUrl = demoVideoPath;
                 	} else {
-                		sdUrl = sr.getUrl();
+                		if(sr != null) {
+                			sdUrl = sr.getUrl();
+                		}
                 	}
                 	sponsoredIV.setVisibility(View.VISIBLE);
                 	Uri uri = Uri.parse(sdUrl);

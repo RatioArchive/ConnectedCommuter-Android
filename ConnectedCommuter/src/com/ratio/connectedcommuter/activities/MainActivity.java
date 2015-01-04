@@ -14,6 +14,7 @@ import android.app.FragmentTransaction;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -82,6 +83,7 @@ public class MainActivity extends Activity implements ActivityInterface {
 		
 		ActionBar ab = getActionBar();
 		ab.setIcon(getResources().getDrawable(R.drawable.hamburger_icon_31));
+		ab.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_background)));
 		
 		// Init fragments
 		mAutoFragment = new AutoFragment();
