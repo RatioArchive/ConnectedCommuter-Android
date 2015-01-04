@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SponsoredDataVideoActivity"
+            android:name="com.ratio.connectedcommuter.activities.SponsoredDataVideoActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:screenOrientation="sensorLandscape" >
         </activity>
