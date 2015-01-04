@@ -180,7 +180,7 @@ public class MainActivity extends Activity implements ActivityInterface {
 	}
 	
 	public void onRewardsUnlocked() {
-		Toast.makeText(mContext, "onRewardsUnlocked", Toast.LENGTH_SHORT).show();
+		Toast.makeText(mContext, "Congrats!  You've unlocked a free webisode for Game of Thrones.", Toast.LENGTH_SHORT).show();
 		mAutoFragment.incrementPoints();
 		switchAppMode(AppMode.PROGRESS);
 		mProgressFragment.onRewardsUnlocked();

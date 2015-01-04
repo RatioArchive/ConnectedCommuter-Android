@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.ratio.common.fragments.BaseRatioFragment;
 import com.ratio.connectedcommuter.R;
@@ -20,6 +23,8 @@ public class ProgressFragment extends BaseRatioFragment {
 
 	private ListView mListView;
 	private ProgressAdapter mAdapter;
+	private View mToGoLayout;
+	private TextView mPointsBar;
 	
 	public ProgressFragment() {
 	}
@@ -38,8 +43,11 @@ public class ProgressFragment extends BaseRatioFragment {
 		// Inflate root
 		final View rootView = inflater.inflate(R.layout.fragment_progress, container, false);
 		mListView = (ListView) rootView.findViewById(R.id.listview);
+		mToGoLayout = rootView.findViewById(R.id.to_go_layout);
+		mPointsBar = (TextView) rootView.findViewById(R.id.points);
 		mAdapter = new ProgressAdapter();
 		if (mIsEnabled) {
+			unlockPointsBar();
 			mAdapter.onRewardUnlocked();
 		}
 		
@@ -68,9 +76,18 @@ public class ProgressFragment extends BaseRatioFragment {
 		mIsEnabled = true;
 		// Enable the hero
 		if (mAdapter != null) {
+			unlockPointsBar();
 			mAdapter.onRewardUnlocked();
 			mAdapter.notifyDataSetChanged();
 		}
+	}
+	
+	private void unlockPointsBar() {
+		mToGoLayout.setVisibility(View.GONE);
+		
+		RelativeLayout.LayoutParams params = (LayoutParams) mPointsBar.getLayoutParams();
+		params.topMargin = 0;
+		mPointsBar.setText("1000");
 	}
 
 }

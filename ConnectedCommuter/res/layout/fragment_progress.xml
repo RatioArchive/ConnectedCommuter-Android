@@ -18,7 +18,38 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true" >
         
-        <TextView
+        <LinearLayout
+            android:id="@+id/to_go_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <com.ratio.common.views.FontableTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="1000" />
+            
+            <View 
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#999999" />
+            
+            <com.ratio.common.views.FontableTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="307" />
+            
+            <com.ratio.common.views.FontableTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="to go" />
+                      
+        </LinearLayout>
+        
+        <com.ratio.common.views.FontableTextView
             android:id="@+id/points"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
